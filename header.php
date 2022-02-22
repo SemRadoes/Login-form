@@ -1,4 +1,4 @@
-<?<php>
+
 <nav>
         <div class="wrapper">
             <ul>
@@ -11,4 +11,3 @@
         </div>
 </nav>
 <div class="wrapper">
-</php>
