@@ -11,6 +11,26 @@ function emptyInputSignup($name, $email, $username, $password, $passwordrepeat){
     return $result;
 }
 
+function loginUser($connection, $username, $password){
+    $userIdexists = userIdexists($connection, $username, $username);
+    if($userIdexists === false){
+        header("location: ../signup.php?error=wronglogin");
+        exit();
+    }
+
+    $passwordHashed = $userIdexists["usersPassword"];
+    $checkPassword = password_verify($password, $passwordHashed);
+    if($checkPassword === false){
+        header("location: ../signup.php?error=wronglogin");
+        exit();
+    } else if($checkPassword === true){
+        session_start();
+        $_SESSION["userid"] = $userIdexists["userId"];
+        $_SESSION["useruid"] = $userIdexists["userUId"];
+        header("location: ../index.php");
+        exit();
+    }
+}
 function invalidUid($username){
     $result;
     if(!preg_match("/^[a-zA-Z0-9]*$/", $username)){
